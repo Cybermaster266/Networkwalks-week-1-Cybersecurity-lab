@@ -1,4 +1,4 @@
- # NETWORKWALKS Cybersecurity Internship — Week 1 Project
+# NETWORKWALKS Cybersecurity Internship — Week 1 Project
 
 ## Virtual Lab Environment Setup (Kali Linux on VirtualBox)
 
@@ -97,5 +97,3 @@ Kali Linux has been launched successfully, the existing VM has been cloned, NAT 
 SAMUEL ARIYO
 
 NETWORKWALKS CYBERSCURITY INTERNSHIP BATCH B084
-
-NETWORKWALKS Cybersecurity Internship — Batch B083
