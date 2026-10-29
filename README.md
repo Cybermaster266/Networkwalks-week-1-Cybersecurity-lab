@@ -93,5 +93,8 @@ The commands above document the troubleshooting steps attempted. The final IP as
 ### 8. Conclusion
 This project provided practical experience configuring a Kali Linux virtual machine for cybersecurity labs and troubleshooting network connectivity issues. It also reinforced the importance of correctly configuring IP addresses, gateways, DNS settings, and network interfaces.
 
-**Project:** NETWORKWALKS B083 Cybersecurity Lab Setup  
+*Author*
+Samuel Ariyo 
+
+**Project:** NETWORKWALKS B084 Cybersecurity Lab Setup  
 **Week:** 1
