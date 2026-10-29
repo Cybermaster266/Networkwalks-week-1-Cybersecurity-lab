@@ -1,99 +1,97 @@
-# NETWORKWALKS Cybersecurity Internship — Week 1 Project
+# NETWORKWALKS B084 – Week 1 Project
+## Cybersecurity Lab Setup Using Kali Linux and VirtualBox
 
-## Virtual Lab Environment Setup (Kali Linux on VirtualBox)
+### 1. Project Overview
+This project involved setting up a Kali Linux virtual machine using Oracle VirtualBox for cybersecurity practice. I cloned my existing Kali Linux virtual machine and configured the clone to use a NAT Network.
 
-- **Program:** NETWORKWALKS Cybersecurity Internship
-- **Batch:** B083
-- **Week:** Week 1
-- **Project Title:** Virtual Lab Environment Setup — Cloning an Existing Kali Linux VM and Configuring a NAT Network
+### 2. Lab Environment
+- **Host OS:** Windows
+- **Virtualization Software:** Oracle VirtualBox
+- **Guest OS:** Kali Linux 2026.2
+- **Network Type:** NAT Network
+- **NAT Network Name:** NatNetwork
+- **IPv4 Subnet:** `10.0.0.0/24`
+- **Static IP Address:** `10.0.0.2/24`
+- **Gateway:** `10.0.0.1`
+- **DNS Server:** `8.8.8.8`
 
-## Project Overview
+### 3. Tasks Performed
+1. Created a clone of the existing Kali Linux virtual machine.
+2. Configured a NAT Network in VirtualBox.
+3. Set the NAT Network IPv4 prefix to `10.0.0.0/24`.
+4. Attached the cloned Kali Linux VM to the NAT Network.
+5. Configured the network connection to use a static IPv4 address.
+6. Troubleshot the network connection when internet access failed.
 
-This project documents the process of preparing a virtual cybersecurity lab using Oracle VirtualBox and Kali Linux.
+### 4. IP Address Configuration
 
-Instead of installing a completely new Kali Linux virtual machine from scratch, this project focuses on cloning an existing virtual machine and configuring the virtual networking environment for cybersecurity practice.
+The intended network settings were:
 
-The lab setup includes configuring a VirtualBox NAT Network, checking network connectivity, and documenting the configuration process with screenshots.
+| Setting | Value |
+|---|---|
+| IPv4 Method | Manual |
+| IP Address | `10.0.0.2/24` |
+| Gateway | `10.0.0.1` |
+| DNS | `8.8.8.8` |
+| Network Interface | `eth0` |
 
-## Project Objectives
+### 5. Problem Faced: Internet Access
 
-The objectives of this project are to:
+After connecting the cloned Kali Linux VM to the NAT Network, internet access was unavailable. The `eth0` interface did not display an assigned IP address, and NetworkManager reported that connection activation failed because the IP configuration could not be reserved.
 
-- Use Oracle VirtualBox to manage virtual machines.
-- Clone an existing Kali Linux virtual machine.
-- Configure a VirtualBox NAT Network.
-- Check Kali Linux network connectivity and internet access.
-- Verify the required network subnet and IP address.
-- Document the process, results, and troubleshooting steps.
-- Prepare a virtual environment for future authorised cybersecurity labs.
+### 6. Troubleshooting and Solution
 
-## Tools and Technologies
+I used NetworkManager (`nmcli`) to associate the connection with the `eth0` interface and reapply the static IP configuration.
 
-- **Oracle VirtualBox** — virtualisation platform.
-- **Kali Linux** — cybersecurity testing operating system.
-- **NAT Network** — virtual networking configuration.
-- **GitHub** — project documentation and evidence.
+**Step 1: Associate the connection with `eth0`.**
 
-## Implementation Process
+```bash
+sudo nmcli connection modify "Wired connection 1" connection.interface-name eth0
+```
 
-### 1. Existing Kali Linux Virtual Machine
+**Step 2: Reapply the static IP settings.**
 
-An existing Kali Linux virtual machine was used as the source for the cloning process.
+```bash
+sudo nmcli connection modify "Wired connection 1" ipv4.method manual ipv4.addresses 10.0.0.2/24 ipv4.gateway 10.0.0.1 ipv4.dns 8.8.8.8
+```
 
-### 2. Virtual Machine Cloning
+**Step 3: Configure the duplicate-address detection timeout.**
 
-The existing virtual machine was cloned in VirtualBox to prepare the lab environment.
+```bash
+sudo nmcli connection modify "Wired connection 1" ipv4.dad-timeout 0
+```
 
-### 3. NAT Network Configuration
+**Step 4: Restart the connection.**
 
-A VirtualBox NAT Network was configured as part of the lab setup. The required subnet for this project is `10.0.0.0/24`.
+```bash
+sudo nmcli connection down "Wired connection 1"
+sudo nmcli connection up "Wired connection 1"
+```
 
-The configured subnet and Kali Linux IP address will be verified against the project requirements.
+**Step 5: Check the IP address.**
 
-### 4. Internet Connectivity Test
+```bash
+ip addr show eth0
+```
 
-Kali Linux was launched successfully, and internet connectivity was confirmed.
+**Step 6: Test internet connectivity.**
 
-### 5. Documentation
+```bash
+ping -c 4 8.8.8.8
+```
 
-Screenshots of the cloning process and NAT Network configuration are being collected to document the practical work.
+The commands above document the troubleshooting steps attempted. The final IP assignment and internet connectivity should be verified before marking the issue as resolved.
 
-## Project Checklist
+### 7. Skills Practised
+- Virtual machine cloning and configuration
+- VirtualBox NAT Network setup
+- Static IPv4 addressing
+- Linux network interface troubleshooting
+- NetworkManager command-line administration
+- Basic connectivity testing
 
--  Launch the existing Kali Linux virtual machine.
--  Clone the existing virtual machine.
--  Work on NAT Network configuration.
--  Confirm that Kali Linux can access the internet.
--  Verify the NAT Network subnet is `10.0.0.0/24`.
--  Verify Kali Linux uses `10.0.0.2/24`.
--  Document final verification results.
+### 8. Conclusion
+This project provided practical experience configuring a Kali Linux virtual machine for cybersecurity labs and troubleshooting network connectivity issues. It also reinforced the importance of correctly configuring IP addresses, gateways, DNS settings, and network interfaces.
 
-
-## Screenshots and Evidence
-
-Screenshots will be added to document:
-
-- Existing virtual machine and cloning process.
-- VirtualBox NAT Network configuration.
-- Kali Linux network settings.
-- Internet connectivity test.
-- Additional configuration and verification results.
-
-## Learning Outcomes
-
-This project provides practical experience with:
-
-- Virtual machine management and cloning.
-- Virtual networking and NAT Network configuration.
-- Linux network troubleshooting.
-- IP addressing and connectivity verification.
-- Technical documentation using GitHub.
-
-## Project Status
-
-Kali Linux has been launched successfully, the existing VM has been cloned, NAT Network configuration has been worked on, and internet connectivity has been confirmed. Further checks will establish whether all required network settings match the project specifications.
-
-## Author
-SAMUEL ARIYO
-
-NETWORKWALKS CYBERSCURITY INTERNSHIP BATCH B084
+**Project:** NETWORKWALKS B083 Cybersecurity Lab Setup  
+**Week:** 1
